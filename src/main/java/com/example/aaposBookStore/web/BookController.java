@@ -21,16 +21,16 @@ public class BookController {
     @Autowired
     private BookRepository repository;
    
-    @RequestMapping(value = "/listBooks", method = RequestMethod.GET)
+    @RequestMapping(value = "/booklist", method = RequestMethod.GET)
     public String books(Model model) {
         model.addAttribute("books", repository.findAll());
-        return "listBooks";
+        return "booklist";
     }
 
-    @RequestMapping(value = "/listBooks", method = RequestMethod.POST)
+    @RequestMapping(value = "/booklist", method = RequestMethod.POST)
     public String booksPost(Model model) {
         model.addAttribute("books", repository.findAll());
-        return "listBooks";
+        return "booklist";
     }
 
    
