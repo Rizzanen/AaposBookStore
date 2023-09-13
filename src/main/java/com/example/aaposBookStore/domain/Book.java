@@ -14,12 +14,12 @@ public class Book {
     private String title;
     private String author;
     private long publicationYear;
-    private long isbn;
+    private String isbn;
     private double price;
 
     protected Book() {}
     
-    public Book(String title, String author, long publicationYear, long isbn, double price) {
+    public Book(String title, String author, long publicationYear, String isbn, double price) {
         super();
         this.title = title;
         this.author = author;
@@ -28,6 +28,13 @@ public class Book {
         this.price = price;
     }
 
+     public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
    
 
     public String getTitle() {
@@ -54,11 +61,11 @@ public class Book {
         this.publicationYear = publicationYear;
     }
 
-    public long getIsbn() {
+    public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(long isbn) {
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 
@@ -75,6 +82,8 @@ public class Book {
         return "Book [title=" + title + ", author=" + author + ", publicationYear=" + publicationYear + ", isbn=" + isbn
                 + ", price=" + price + "]";
     }
+
+   
 
     
 }

@@ -25,8 +25,8 @@ public class AaposBookStoreApplication {
     public CommandLineRunner bookDemo(BookRepository repository) {
         return(args) -> {
 			log.info("save a couple of books");
-            repository.save(new Book("A Farewell to Arms", "Ernest Hemingway" , 1929, 1232323, 12.95));
-            repository.save(new Book("Animal Farm", "George Orwell" , 1945, 2212343, 10.95));
+            repository.save(new Book("A Farewell to Arms", "Ernest Hemingway" , 1929, "1232323-04", 12.95));
+            repository.save(new Book("Animal Farm", "George Orwell" , 1945, "2212343-05", 10.95));
 
             
 			log.info("fetch all books");
