@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.boot.CommandLineRunner;
 import com.example.aaposBookStore.domain.BookRepository;
+import com.example.aaposBookStore.domain.CategoryRepository;
 import com.example.aaposBookStore.domain.Book;
 
 @Controller
@@ -22,6 +23,9 @@ public class BookController {
 
     @Autowired
     private BookRepository repository;
+
+    @Autowired
+    private CategoryRepository crepository;
    
     @RequestMapping(value = "/booklist", method = RequestMethod.GET)
     public String listBooks(Model model) {
@@ -37,7 +41,8 @@ public class BookController {
 
    @RequestMapping(value = "/addbook", method = RequestMethod.GET)
     public String addBook(Model model) {
-        model.addAttribute("newBook", new Book("","",0,"",0));
+        model.addAttribute("newBook", new Book());
+        model.addAttribute("categorys", crepository.findAll());
         return "addbook";
     }
 
@@ -58,7 +63,9 @@ public class BookController {
     public String editBook(@PathVariable("id") Long bookId,Model model) {
         Optional<Book> optionalBook = repository.findById(bookId);
         Book book = optionalBook.get();
+        model.addAttribute("categorys", crepository.findAll());
         model.addAttribute("editedBook",book);
+        
         repository.deleteById(bookId);
         return "editbook";
     }
