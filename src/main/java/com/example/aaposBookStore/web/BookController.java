@@ -1,6 +1,7 @@
 package com.example.aaposBookStore.web;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.logging.log4j.message.Message;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.boot.CommandLineRunner;
 import com.example.aaposBookStore.domain.BookRepository;
 import com.example.aaposBookStore.domain.CategoryRepository;
@@ -27,11 +29,26 @@ public class BookController {
     @Autowired
     private CategoryRepository crepository;
    
+    //shows as thymeleaf template
     @RequestMapping(value = "/booklist", method = RequestMethod.GET)
     public String listBooks(Model model) {
         model.addAttribute("books", repository.findAll());
         return "booklist";
     }
+
+    //shows as JSON using RESTful service
+    @RequestMapping(value="/allBooks", method = RequestMethod.GET)
+    public @ResponseBody List <Book> bookListRest(){
+        return(List<Book>) repository.findAll();
+    }
+
+     //shows as JSON using RESTful service
+    @RequestMapping(value="/book/{id}", method = RequestMethod.GET)
+    public @ResponseBody Optional<Book> findBookRest(@PathVariable("id")Long bookId){
+        return repository.findById(bookId);
+    }
+
+
 
     @RequestMapping(value = "/booklist", method = RequestMethod.POST)
     public String listBooksPost(Model model) {
