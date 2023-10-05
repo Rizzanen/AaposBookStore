@@ -3,10 +3,11 @@ package com.example.aaposBookStore.web;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.apache.logging.log4j.message.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,6 +29,11 @@ public class BookController {
 
     @Autowired
     private CategoryRepository crepository;
+
+    @RequestMapping("/login")
+	public String login() {
+		return "login";
+	}
    
     //shows as thymeleaf template
     @RequestMapping(value = "/booklist", method = RequestMethod.GET)
@@ -70,6 +76,7 @@ public class BookController {
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ADMIN')")
     public String deleteBook(@PathVariable("id") Long bookId, Model model) {
     repository.deleteById(bookId);
         

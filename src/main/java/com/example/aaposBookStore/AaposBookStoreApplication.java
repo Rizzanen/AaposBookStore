@@ -2,7 +2,7 @@ package com.example.aaposBookStore;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import com.example.aaposBookStore.domain.AppUser;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,6 +12,8 @@ import com.example.aaposBookStore.domain.Book;
 import com.example.aaposBookStore.domain.BookRepository;
 import com.example.aaposBookStore.domain.Category;
 import com.example.aaposBookStore.domain.CategoryRepository;
+import com.example.aaposBookStore.domain.AppUserRepository;
+import java.util.Arrays;
 
 @SpringBootApplication
 public class AaposBookStoreApplication {
@@ -24,7 +26,8 @@ public class AaposBookStoreApplication {
 
 
 	 @Bean
-    public CommandLineRunner bookDemo(BookRepository brepository, CategoryRepository crepository) {
+    public CommandLineRunner bookDemo(BookRepository brepository, CategoryRepository crepository,
+	AppUserRepository urepository) {
         return(args) -> {
 			log.info("save a couple of books");
 			crepository.save(new Category("Fantasy"));
@@ -41,6 +44,11 @@ public class AaposBookStoreApplication {
 			for (Book book : brepository.findAll()) {
 				log.info(book.toString());
 			}
+
+			// Create users with BCrypt encoded password (user/user, admin/admin)
+			AppUser user1 = new AppUser("user", "$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6", "USER");
+			AppUser user2 = new AppUser("admin", "$2a$08$bCCcGjB03eulCWt3CY0AZew2rVzXFyouUolL5dkL/pBgFkUH9O4J2", "ADMIN");
+			urepository.saveAll(Arrays.asList(user1, user2));
         };
     }
 }
